@@ -5,6 +5,8 @@ import Cost from './pages/Cost'
 import Security from './pages/Security'
 import NotFoundPage from './pages/PageNotFound'
 import AppLayout from './ui/layout/AppLayout'
+import Admin from './pages/Admin'
+import Docs from './pages/Docs'
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Route path="connections" element={<Connections />} />
           <Route path="cost" element={<Cost />} />
           <Route path="security" element={<Security />} />
+          <Route path="admin" element={<Admin />} />
+          <Route path="docs" element={<Docs />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

@@ -10,7 +10,6 @@ export const StyledNavBar = styled(NavBar, {
   color: theme.palette.text.primary,
   zIndex: theme.zIndex.drawer + 1,
   left: `calc(${theme.spacing(9.5)} + 1px)`,
-  // marginLeft: `calc(${theme.spacing(9.5)} + 1px)`,
   width: `calc(100% - calc(${theme.spacing(9.5)} + 1px))`,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
