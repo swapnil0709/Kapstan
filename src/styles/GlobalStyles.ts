@@ -43,14 +43,6 @@ export const globalStyles = css`
     cursor: not-allowed;
   }
 
-  select:disabled,
-  input:focus,
-  button:focus,
-  textarea:focus,
-  button:has(svg) {
-    line-height: 0;
-  }
-
   a {
     color: inherit;
     text-decoration: none;
