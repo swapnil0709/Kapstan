@@ -17,7 +17,7 @@ function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props
   const tabHeading = value === 0 ? 'CPU Utilization (%)' : 'Memory'
   const legend = [
-    { id: 1, color: '#6E27D5', text: 'tic-tac-toe' },
+    { id: 1, color: '#6E27D5', text: 'tic-tac-toc' },
     { id: 2, color: '#B88BFE', text: 'chess' },
     { id: 3, color: '#F39C12', text: 'sudoku' },
   ]
