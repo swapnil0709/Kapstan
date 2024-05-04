@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import ThreeDotsIcon from '../assets/Vertical.svg'
 import Icon from '../components/Icon/Icon'
 import historyIcon from '../assets/History.svg'
@@ -11,6 +11,7 @@ import { useEffect } from 'react'
 import ActionEnum from '../state/stateEnum'
 import axios from '../api/axiosConfig'
 import { APPS_URL } from '../api/urls'
+import Tag from '../components/Tag/Tag'
 
 const actionButtons = [
   { label: 'Overview', icon: monitorIcon, path: 'overview' },
@@ -67,9 +68,7 @@ const Applications = () => {
             alignItems={'center'}
             gap={'10px'}
           >
-            <Button color="success" variant="outlined" size="small">
-              {state.selectedAppStatus}
-            </Button>
+            <Tag text={state.selectedAppStatus} />
             <Icon altText="Three dots menu" icon={ThreeDotsIcon} />
           </Box>
         </Box>
