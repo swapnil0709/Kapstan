@@ -20,7 +20,8 @@
     "date-fns": "^3.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.23.0"
+    "react-router-dom": "^6.23.0",
+    "recharts": "^2.12.6"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.32.1",

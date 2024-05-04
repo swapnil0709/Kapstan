@@ -9,6 +9,7 @@ import { getTimeAgo } from '../../../utils/dateTime'
 import { useQueries } from '@tanstack/react-query'
 import { APIS_URL } from '../../../api/urls'
 import { fetchData } from '../../../utils/fetchData'
+import CustomLineChart from '../../LineChart/LineChart'
 
 const Overview = () => {
   const { state } = useAppContext()
@@ -108,7 +109,14 @@ const Overview = () => {
           {cpuData.isLoading || memoryData.isLoading ? (
             <>Loading...</>
           ) : (
-            <>Hello</>
+            <Box
+              sx={{
+                marginTop: '10px',
+                width: '100%',
+              }}
+            >
+              <CustomLineChart data={cpuData.data} appData={state.appData} />
+            </Box>
           )}
         </Card>
       </Grid2>
