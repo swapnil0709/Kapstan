@@ -5,10 +5,11 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { StyledTable } from './Table.style'
 import { TableProps, eventDataProps } from './Table.type'
 import { getTimeAgo } from '../../utils/dateTime'
+import Tag from '../../components/Tag/Tag'
 
 function createData(
   event: string,
@@ -81,9 +82,7 @@ export default function BasicTable({ data, appData }: TableProps) {
                 {row.version}
               </TableCell>
               <TableCell align="left">
-                <Button variant="outlined" color="success">
-                  {row.status}
-                </Button>
+                <Tag text={row.status} />
               </TableCell>
             </TableRow>
           ))}

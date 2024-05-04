@@ -74,3 +74,26 @@ export const StyledDot = styled('div')(({ color }) => ({
   borderRadius: '50%',
   backgroundColor: color,
 }))
+
+export const StyledTag = styled('div')(
+  ({
+    color,
+    bgColor,
+    width,
+  }: {
+    color: string
+    bgColor: string
+    width?: string
+  }) => ({
+    height: '24px',
+    width: width,
+    borderRadius: '4px',
+    padding: '3px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    backgroundColor: bgColor,
+    border: `1px solid ${color}`,
+    color: color,
+  })
+)
