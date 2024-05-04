@@ -10,12 +10,34 @@ import Avatar from '../../components/Avatar/Avatar'
 import Box from '@mui/material/Box'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { NavBarProps } from './Navbar.type'
+import { useAppContext } from '../../hooks/useAppContext'
+import { SelectChangeEvent } from '@mui/material'
+import ActionEnum from '../../state/stateEnum'
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
 const NavBar = ({ open, drawerWidth }: NavBarProps) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   )
+  const { state, dispatch } = useAppContext()
+
+  const dropDownValue = state.appData?.length
+    ? state.appData[state.selectedAppId - 1].name
+    : ''
+  const handleDropdownChange = (event: SelectChangeEvent) => {
+    const selectedValue = event.target.value
+    const foundValue = state.appData.find(
+      (eachRecord) => eachRecord.name === selectedValue
+    )
+    dispatch({
+      type: ActionEnum.UPDATE_SELECTED_APP,
+      payload: {
+        id: foundValue.id,
+        name: foundValue.name,
+        status: foundValue.status,
+      },
+    })
+  }
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
@@ -47,12 +69,13 @@ const NavBar = ({ open, drawerWidth }: NavBarProps) => {
             <Typography fontWeight={500} fontSize={'10px'} lineHeight={'16px '}>
               Applications
             </Typography>
-            <Dropdown
-              options={[
-                { id: 1, value: 'Tic-tac-toe' },
-                { id: 2, value: 'Play-game' },
-              ]}
-            />
+            {state.appData && (
+              <Dropdown
+                value={dropDownValue}
+                onChange={handleDropdownChange}
+                options={state.appData}
+              />
+            )}
           </Box>
           <Box
             sx={{

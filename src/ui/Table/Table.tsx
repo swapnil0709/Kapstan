@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
@@ -6,26 +7,41 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { Box, Button, Typography } from '@mui/material'
 import { StyledTable } from './Table.style'
+import { TableProps, eventDataProps } from './Table.type'
+import { getTimeAgo } from '../../utils/dateTime'
 
 function createData(
   event: string,
   version: number,
   status: string,
-  time: string
+  time: string,
+  id: number
 ) {
-  return { event, version, status, time }
+  return { event, version, status, time, id }
 }
-
-const rows = [
-  createData('Frozen yoghurt', 1.21, 'In Progress', '1 minute ago'),
-  createData('Ice cream sandwich', 1.22, 'In Progress', '1 minute ago'),
-  createData('Eclair', 1.23, 'In Progress', '1 minute ago'),
-  createData('Cupcake', 2.1, 'In Progress', '1 minute ago'),
-]
 const colStyles = { fontSize: '14px', fontWeight: 700, lineHeight: '20px' }
 const textStyles = { fontSize: '14px', fontWeight: 500, lineHeight: '20px' }
 const subTextStyles = { fontSize: '12px', fontWeight: 500, lineHeight: '18px' }
-export default function BasicTable() {
+
+export default function BasicTable({ data, appData }: TableProps) {
+  const rows: any[] = []
+  const tableData = data.slice(0, 4)
+  tableData.forEach(
+    ({ applicationId, id, status, timestamp, version }: eventDataProps) => {
+      const foundApp = appData.find(
+        (eachData) => eachData.id === Number(applicationId)
+      )
+      rows.push(
+        createData(
+          foundApp?.name || '',
+          version,
+          status,
+          getTimeAgo(timestamp),
+          id
+        )
+      )
+    }
+  )
   return (
     <TableContainer component={Paper} sx={{ boxShadow: 'none' }}>
       <StyledTable aria-label="simple table">
@@ -45,7 +61,7 @@ export default function BasicTable() {
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.version} //TODO: Replace key with id
+              key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell align="left">
@@ -65,7 +81,7 @@ export default function BasicTable() {
                 {row.version}
               </TableCell>
               <TableCell align="left">
-                <Button variant="outlined" color="warning">
+                <Button variant="outlined" color="success">
                   {row.status}
                 </Button>
               </TableCell>

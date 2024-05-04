@@ -6,6 +6,11 @@ import monitorIcon from '../assets/Monitor.svg'
 import triangleIcon from '../assets/Triangle.svg'
 import buildIcon from '../assets/Build.svg'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useAppContext } from '../hooks/useAppContext'
+import { useEffect } from 'react'
+import ActionEnum from '../state/stateEnum'
+import axios from '../api/axiosConfig'
+import { APPS_URL } from '../api/urls'
 
 const actionButtons = [
   { label: 'Overview', icon: monitorIcon, path: 'overview' },
@@ -21,9 +26,29 @@ const actionButtons = [
 const Applications = () => {
   const navigate = useNavigate()
   const location = useLocation()
+  const { state, dispatch } = useAppContext()
   const handleTabChange = (path: string) => {
     navigate(path)
   }
+
+  const fetchData = async () => {
+    const data = await axios.get(APPS_URL)
+    const defaultData = data.data[0]
+    dispatch({ type: ActionEnum.STORE_APP_DATA, payload: data.data })
+    dispatch({
+      type: ActionEnum.UPDATE_SELECTED_APP,
+      payload: {
+        id: defaultData.id,
+        name: defaultData.name,
+        status: defaultData.status,
+      },
+    })
+  }
+
+  useEffect(() => {
+    fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
@@ -34,7 +59,7 @@ const Applications = () => {
           alignItems={'center'}
         >
           <Typography fontSize={'20px'} fontWeight={700} lineHeight={'24px'}>
-            Tic-tac-toe
+            {state.selectedAppName}
           </Typography>
           <Box
             display={'flex'}
@@ -43,7 +68,7 @@ const Applications = () => {
             gap={'10px'}
           >
             <Button color="success" variant="outlined" size="small">
-              Deployed
+              {state.selectedAppStatus}
             </Button>
             <Icon altText="Three dots menu" icon={ThreeDotsIcon} />
           </Box>

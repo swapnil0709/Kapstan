@@ -9,16 +9,27 @@ import ActionEnum from './stateEnum'
 
 const initialState: InitialStateProps = {
   selectedAppId: 1,
+  selectedAppName: 'tic-tac-toc',
+  selectedAppStatus: 'deployed',
+  appData: [],
 }
 
 export const AppsContext = createContext<AppContextProps | null>(null)
 
 const appReducer = (state: InitialStateProps, action: ActionType) => {
   switch (action.type) {
-    case ActionEnum.UPDATE_APP_ID: {
+    case ActionEnum.UPDATE_SELECTED_APP: {
       return {
         ...state,
-        selectedAppId: action.payload,
+        selectedAppId: action.payload.id,
+        selectedAppName: action.payload.name,
+        selectedAppStatus: action.payload.status,
+      }
+    }
+    case ActionEnum.STORE_APP_DATA: {
+      return {
+        ...state,
+        appData: action.payload,
       }
     }
     default:

@@ -1,5 +1,6 @@
 enum ActionEnum {
-  UPDATE_APP_ID = 'update/selectedAppId',
+  UPDATE_SELECTED_APP = 'update/selectedApp',
+  STORE_APP_DATA = 'store/appData',
 }
 
 export default ActionEnum
