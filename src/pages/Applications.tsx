@@ -6,6 +6,12 @@ import monitorIcon from '../assets/Monitor.svg'
 import triangleIcon from '../assets/Triangle.svg'
 import buildIcon from '../assets/Build.svg'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { getApplicationsData } from '../api/applications'
+import { getMemoryUtilizationData } from '../api/memory-utilization'
+import { getCpuUtilizationData } from '../api/cpu-utilization'
+import { getEventHistoryData } from '../api/event-history'
 
 const actionButtons = [
   { label: 'Overview', icon: monitorIcon, path: 'overview' },
@@ -24,6 +30,26 @@ const Applications = () => {
   const handleTabChange = (path: string) => {
     navigate(path)
   }
+  const { data: applicationData } = useQuery({
+    queryKey: ['applications'],
+    queryFn: getApplicationsData,
+  })
+  const { data: memoryData } = useQuery({
+    queryKey: ['memory-utilization'],
+    queryFn: getMemoryUtilizationData,
+  })
+  const { data: cpuData } = useQuery({
+    queryKey: ['cpu-utilization'],
+    queryFn: getCpuUtilizationData,
+  })
+  const { data: eventHistoryData } = useQuery({
+    queryKey: ['event-history'],
+    queryFn: getEventHistoryData,
+  })
+
+  useEffect(() => {
+    console.log({ applicationData, memoryData, cpuData, eventHistoryData })
+  }, [applicationData, cpuData, eventHistoryData, memoryData])
 
   return (
     <>
@@ -54,6 +80,7 @@ const Applications = () => {
 
             return (
               <Box
+                key={path}
                 height={'20px'}
                 display={'flex'}
                 alignItems={'center'}

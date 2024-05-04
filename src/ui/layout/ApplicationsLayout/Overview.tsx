@@ -4,6 +4,7 @@ import { Box, Button, Typography } from '@mui/material'
 import successIcon from '../../../assets/Success.svg'
 
 import Icon from '../../../components/Icon/Icon'
+import BasicTable from '../../../components/Table/Table'
 
 const Overview = () => {
   return (
@@ -79,7 +80,22 @@ const Overview = () => {
       </Grid2>
       <Grid2 xs={6}>
         <Card heading="Event History" height="396px" padding="24px">
-          <>Hello</>
+          <BasicTable />
+          <Box sx={{ marginTop: '10px' }}>
+            <Typography
+              sx={{
+                fontWeight: 500,
+                fontSize: '14px',
+                lineHeight: '20px',
+                color: '#6E27D5',
+                textDecoration: 'underline',
+                marginLeft: '30px',
+                cursor: 'pointer',
+              }}
+            >
+              View more
+            </Typography>
+          </Box>
         </Card>
       </Grid2>
     </Grid2>
