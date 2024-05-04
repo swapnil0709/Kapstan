@@ -2,11 +2,25 @@ import Grid2 from '@mui/material/Unstable_Grid2/Grid2'
 import Card from '../../../components/Card/Card'
 import { Box, Button, Typography } from '@mui/material'
 import successIcon from '../../../assets/Success.svg'
-
 import Icon from '../../../components/Icon/Icon'
 import BasicTable from '../../../components/Table/Table'
+import { useQueries } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { APIS_URL } from '../../../api/urls'
+import { fetchData } from '../../../utils/fetchData'
 
 const Overview = () => {
+  const results = useQueries({
+    queries: APIS_URL.map((url) => ({
+      queryKey: ['post', url],
+      queryFn: () => fetchData(url),
+      staleTime: Infinity,
+    })),
+  })
+
+  useEffect(() => {
+    console.log({ results })
+  }, [results])
   return (
     <Grid2 container spacing={2}>
       <Grid2 xs={12}>

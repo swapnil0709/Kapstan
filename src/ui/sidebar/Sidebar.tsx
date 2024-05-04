@@ -93,16 +93,11 @@ const SideBar = ({ children }: { children: React.ReactElement }) => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const handleDrawerOpen = () => {
-    setOpen(true)
-  }
-
   const handleTabClick = (route: string) => {
     if (!route) {
       setOpen((prev) => !prev)
       return
     }
-    handleDrawerOpen()
     navigate(route.toLowerCase())
   }
   const getDrawerItem = (array: DrawerListItemProps) => {
