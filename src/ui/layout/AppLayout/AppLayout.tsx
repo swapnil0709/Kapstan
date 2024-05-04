@@ -1,13 +1,13 @@
 import { Outlet } from 'react-router-dom'
 import { StyledAppLayout } from './AppLayout.style'
-import Sidebar from '../sidebar/Sidebar'
+import SideBar from '../../sidebar/Sidebar'
 
 const AppLayout = () => {
   return (
     <StyledAppLayout>
-      <Sidebar>
+      <SideBar>
         <Outlet />
-      </Sidebar>
+      </SideBar>
     </StyledAppLayout>
   )
 }

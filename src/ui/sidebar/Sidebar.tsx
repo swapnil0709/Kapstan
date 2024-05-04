@@ -1,157 +1,191 @@
 import * as React from 'react'
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
-import MuiDrawer from '@mui/material/Drawer'
-// import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
-// import Toolbar from '@mui/material/Toolbar'
 import List from '@mui/material/List'
 import CssBaseline from '@mui/material/CssBaseline'
-// import Typography from '@mui/material/Typography'
-import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
-// import MenuIcon from '@mui/icons-material/Menu'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
 import NavBar from '../navbar/Navbar'
+import {
+  StyledDivider,
+  StyledDrawer,
+  StyledListItemText,
+  StyledSidebar,
+  centerStyle,
+} from './Sidebar.style'
+import { DRAWER_WIDTH } from './constants'
+import KapstanLogo from '../../assets/Kapstan.svg'
+import KapstanLogoOnly from '../../assets/OnlyLogo.svg'
+import { DrawerListItemProps } from './Sidebar.type'
+import { useLocation, useNavigate } from 'react-router-dom'
+import Icon from '../../components/Icon/Icon'
+import connectionIcon from '../../assets/Link.svg'
+import appsIcon from '../../assets/Apps.svg'
+import costIcon from '../../assets/Money.svg'
+import securityIcon from '../../assets/Shield.svg'
+import docsIcon from '../../assets/Docs.svg'
+import adminIcon from '../../assets/User.svg'
+import leftIcon from '../../assets/Left.svg'
+import rightIcon from '../../assets/Right.svg'
 
-const drawerWidth = 220
-
-const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: 'hidden',
-})
-
-const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(10)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(9.5)} + 1px)`,
+const APPS_SECTION = [
+  {
+    id: 1,
+    text: 'Applications',
+    icon: <Icon altText="Applications Icon" icon={appsIcon} />,
   },
-})
+]
+const PAGES_SECTION = [
+  {
+    id: 2,
+    text: 'Connections',
+    icon: <Icon altText="Connections Icon" icon={connectionIcon} />,
+  },
+  {
+    id: 3,
+    text: 'Cost',
+    icon: <Icon altText="Cost Icon" icon={costIcon} />,
+  },
+  {
+    id: 4,
+    text: 'Security',
+    icon: <Icon altText="Security Icon" icon={securityIcon} />,
+  },
+]
+const ADMIN_SECTION = [
+  {
+    id: 5,
+    text: 'Admin',
+    icon: <Icon altText="Admin Icon" icon={adminIcon} />,
+  },
+  {
+    id: 6,
+    text: 'Docs',
+    icon: <Icon altText="Docs Icon" icon={docsIcon} />,
+  },
+]
+const DRAWER_CLOSE = [
+  {
+    id: 8,
+    text: '',
+    icon: <Icon altText="Drawer close Icon" icon={leftIcon} />,
+  },
+]
+const DRAWER_OPEN = [
+  {
+    id: 9,
+    text: '',
+    icon: <Icon altText="Drawer open Icon" icon={rightIcon} />,
+  },
+]
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }))
 
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: 'nowrap',
-  boxSizing: 'border-box',
-  ...(open && {
-    ...openedMixin(theme),
-    '& .MuiDrawer-paper': openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    '& .MuiDrawer-paper': closedMixin(theme),
-  }),
-}))
-
 const SideBar = ({ children }: { children: React.ReactElement }) => {
-  const theme = useTheme()
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(true)
+  const navigate = useNavigate()
+  const location = useLocation()
 
-  const handleDrawerOpen = () => {
-    setOpen(true)
+  const handleTabClick = (route: string) => {
+    if (!route) {
+      setOpen((prev) => !prev)
+      return
+    }
+    navigate(route.toLowerCase())
   }
-
-  const handleDrawerClose = () => {
-    setOpen(false)
+  const getDrawerItem = (array: DrawerListItemProps) => {
+    return (
+      <List sx={centerStyle}>
+        {array.map(({ id, text, icon }) => {
+          const isActive =
+            text && location.pathname.includes(text.toLowerCase())
+          return (
+            <ListItem key={id} disablePadding sx={centerStyle}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                  backgroundColor: isActive ? '#4D1B95' : '#37146B',
+                  width: isActive ? '44px' : '188px',
+                  height: '44px',
+                  borderRadius: '4px',
+                  '&:hover': {
+                    width: '44px',
+                    backgroundColor: '#4D1B95',
+                  },
+                }}
+                onClick={() => handleTabClick(text)}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 0,
+                    justifyContent: 'center',
+                    '& .MuiSvgIcon-root': {
+                      fontSize: '2.5rem',
+                      color: '#fff',
+                    },
+                  }}
+                >
+                  {icon}
+                </ListItemIcon>
+                {open && (
+                  <StyledListItemText
+                    primary={text}
+                    open={open}
+                    isActive={!!isActive}
+                  />
+                )}
+              </ListItemButton>
+            </ListItem>
+          )
+        })}
+      </List>
+    )
   }
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <StyledSidebar>
       <CssBaseline />
-      <NavBar open={open} drawerWidth={drawerWidth} />
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-                onClick={handleDrawerOpen}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
+      <NavBar open={open} drawerWidth={DRAWER_WIDTH} />
+      <StyledDrawer variant="permanent" open={open}>
+        <Box>
+          <DrawerHeader
+            sx={{
+              ...centerStyle,
+              mr: open ? '30px' : 0,
+            }}
+          >
+            <Icon
+              altText="Kapstan logo"
+              icon={open ? KapstanLogo : KapstanLogoOnly}
+            />
+          </DrawerHeader>
+          <StyledDivider />
+          {getDrawerItem(APPS_SECTION)}
+          <StyledDivider />
+          {getDrawerItem(PAGES_SECTION)}
+          <StyledDivider />
+        </Box>
+        <Box>
+          {getDrawerItem(ADMIN_SECTION)}
+          <StyledDivider />
+          {getDrawerItem(open ? DRAWER_CLOSE : DRAWER_OPEN)}
+        </Box>
+      </StyledDrawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         {children}
       </Box>
-    </Box>
+    </StyledSidebar>
   )
 }
 
