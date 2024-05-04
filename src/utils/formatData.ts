@@ -5,7 +5,8 @@ interface DataItem {
   id: number
   timestamp: string
   applicationId: string
-  cpuUtilization: string
+  cpuUtilization?: string
+  memoryUtilization?: string
 }
 
 interface ResultItem {
@@ -18,7 +19,7 @@ export const transformLineChartData = (
   appData: any[]
 ): ResultItem[] => {
   return data.reduce((acc: ResultItem[], curr: DataItem) => {
-    const { timestamp, applicationId, cpuUtilization } = curr
+    const { timestamp, applicationId, cpuUtilization, memoryUtilization } = curr
     const formattedTime = convertUnixTimestampToString(timestamp)
     const foundRecord = appData.find(
       (item) => item.id === Number(applicationId)
@@ -29,8 +30,12 @@ export const transformLineChartData = (
       entry = { timestamp: formattedTime }
       acc.push(entry)
     }
-
-    entry[`${foundRecord?.name}`] = cpuUtilization
+    if (cpuUtilization) {
+      entry[`${foundRecord?.name}`] = cpuUtilization
+    }
+    if (memoryUtilization) {
+      entry[`${foundRecord?.name}`] = memoryUtilization
+    }
 
     return acc
   }, [])

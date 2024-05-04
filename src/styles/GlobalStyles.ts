@@ -1,4 +1,5 @@
 import { css } from '@emotion/react'
+import { styled } from '@mui/material'
 
 export const globalStyles = css`
   *,
@@ -67,3 +68,9 @@ export const globalStyles = css`
     max-width: 100%;
   }
 `
+export const StyledDot = styled('div')(({ color }) => ({
+  width: '8px',
+  height: '8px',
+  borderRadius: '50%',
+  backgroundColor: color,
+}))

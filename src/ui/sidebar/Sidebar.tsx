@@ -114,10 +114,11 @@ const SideBar = ({ children }: { children: React.ReactElement }) => {
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                   backgroundColor: isActive ? '#4D1B95' : '#37146B',
-                  width: '188px',
+                  width: isActive ? '44px' : '188px',
                   height: '44px',
                   borderRadius: '4px',
                   '&:hover': {
+                    width: '44px',
                     backgroundColor: '#4D1B95',
                   },
                 }}

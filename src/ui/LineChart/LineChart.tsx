@@ -1,14 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from 'recharts'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 import { transformLineChartData } from '../../utils/formatData'
 
 interface LineChartProps {
@@ -18,15 +10,18 @@ interface LineChartProps {
 
 const CustomLineChart: React.FC<LineChartProps> = ({ data, appData }) => {
   const transformedData = transformLineChartData(data, appData)
-  console.log(transformedData)
 
   return (
-    <LineChart width={500} height={300} data={transformedData}>
-      <CartesianGrid stroke="#e8e8e8" horizontal={true} vertical={false} />
-      <XAxis dataKey="timestamp" />
-      <YAxis />
+    <LineChart width={610} height={180} data={transformedData}>
+      <CartesianGrid
+        stroke="#e8e8e8"
+        horizontal={true}
+        vertical={false}
+        strokeOpacity={0.5}
+      />
+      <XAxis dataKey="timestamp" axisLine={false} tickLine={false} />
+      <YAxis axisLine={false} tickLine={false} />
       <Tooltip />
-      <Legend />
       <Line
         dot={false}
         type="monotone"
