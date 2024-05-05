@@ -9,7 +9,7 @@ import { useQueries } from '@tanstack/react-query'
 import { APIS_URL } from '../../../api/urls'
 import { fetchData } from '../../../utils/fetchData'
 import CustomLineChart from '../../LineChart/LineChart'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, CircularProgress, Typography } from '@mui/material'
 import BasicTabs from '../../Tab/Tab'
 import downIcon from '../../../assets/Down.svg'
 
@@ -36,7 +36,7 @@ const Overview = () => {
           actionIcons={<Icon icon={downIcon} altText="down arrow" />}
         >
           {!state.appData?.length ? (
-            <>Loading...</>
+            <CircularProgress />
           ) : (
             <>
               <Box sx={{ marginTop: '15px', display: 'flex', gap: '50px' }}>
@@ -109,7 +109,7 @@ const Overview = () => {
       <Grid2 xs={6}>
         <Card heading="System metrics" height="396px" padding="24px">
           {cpuData.isLoading || memoryData.isLoading ? (
-            <>Loading...</>
+            <CircularProgress />
           ) : (
             <Box
               sx={{
@@ -139,7 +139,7 @@ const Overview = () => {
       <Grid2 xs={6}>
         <Card heading="Event History" height="396px" padding="24px">
           {eventData.isLoading ? (
-            <>Loading...</>
+            <CircularProgress />
           ) : (
             <>
               <Table data={eventData.data} appData={state.appData} />
