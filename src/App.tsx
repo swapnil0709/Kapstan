@@ -4,10 +4,11 @@ import Connections from './pages/Connections'
 import Cost from './pages/Cost'
 import Security from './pages/Security'
 import NotFoundPage from './pages/PageNotFound'
-import AppLayout from './ui/layout/AppLayout'
 import Admin from './pages/Admin'
 import Docs from './pages/Docs'
 import Overview from './ui/layout/ApplicationsLayout/Overview'
+import EnvironmentVariables from './ui/layout/ApplicationsLayout/EnvironmentVariables/EnvironmentVariables'
+import AppLayout from './ui/layout/AppLayout/AppLayout'
 
 function App() {
   return (
@@ -21,7 +22,10 @@ function App() {
           <Route path="applications" element={<Applications />}>
             <Route index element={<Navigate replace to="overview" />} />
             <Route path="overview" element={<Overview />} />
-            <Route path="environment-variables" element={<>Test</>} />
+            <Route
+              path="environment-variables"
+              element={<EnvironmentVariables />}
+            />
             <Route path="alerts" element={<>Test</>} />
             <Route path="event-history" element={<>Test</>} />
           </Route>

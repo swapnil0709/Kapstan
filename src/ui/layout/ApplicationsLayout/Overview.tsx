@@ -11,6 +11,7 @@ import { fetchData } from '../../../utils/fetchData'
 import CustomLineChart from '../../LineChart/LineChart'
 import { Box, Button, Typography } from '@mui/material'
 import BasicTabs from '../../Tab/Tab'
+import downIcon from '../../../assets/Down.svg'
 
 const Overview = () => {
   const { state } = useAppContext()
@@ -32,7 +33,7 @@ const Overview = () => {
           heading="Service info"
           height="186px"
           padding="16px"
-          isCollapsible
+          actionIcons={<Icon icon={downIcon} altText="down arrow" />}
         >
           {!state.appData?.length ? (
             <>Loading...</>

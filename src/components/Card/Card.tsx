@@ -1,21 +1,19 @@
 import { Box, Typography } from '@mui/material'
-import downIcon from '../../assets/Down.svg'
-import Icon from '../Icon/Icon'
 
 const Card = ({
   heading,
   height,
   boxShadow,
   padding,
-  isCollapsible = false,
   children,
+  actionIcons,
 }: {
   heading: string
   height: string
   boxShadow?: string
   padding?: string
-  isCollapsible?: boolean
   children: React.ReactNode
+  actionIcons?: React.ReactNode
 }) => {
   return (
     <Box
@@ -37,7 +35,7 @@ const Card = ({
         >
           {heading}
         </Typography>
-        {isCollapsible && <Icon icon={downIcon} altText="down arrow" />}
+        {actionIcons}
       </Box>
       {children}
     </Box>
