@@ -23,6 +23,12 @@ const Tag = ({ text }: { text: string }) => {
       text = 'In progress'
       width = '100px'
       break
+    case 'uninstalled':
+      color = '#E91F04'
+      bgColor = '#FEF4F2'
+      text = 'Uninstalled'
+      width = '100px'
+      break
     case 'failed':
       color = '#E91F04'
       bgColor = '#FEF4F2'
